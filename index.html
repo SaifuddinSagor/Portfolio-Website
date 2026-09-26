@@ -928,7 +928,22 @@ img{display:block;max-width:100%;}
   .hero-banner p { font-size: 0.82rem !important; }
   .g2, .g3, .cert-grid, .event-gallery { grid-template-columns: 1fr !important; }
   .edu-row { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
-  .pub-card { flex-direction: column !important; align-items: flex-start !important; }
+  /* মোবাইলে পেপারের বিস্তারিত ও সার্টিফিকেট সুন্দরভাবে সাজানো */
+  .pub-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 1.3rem 1.1rem !important;
+  }
+
+  /* মোবাইলে সার্টিফিকেট বক্সটি মাঝখানে সুন্দর সাইজে সেন্টারে আনা */
+  .pub-card div[style*="180px"] {
+    width: 100% !important;
+    max-width: 260px !important;      /* মোবাইলের জন্য সুন্দর স্ট্যান্ডার্ড সাইজ */
+    margin: 1.2rem auto 0 auto !important; /* মাঝখানে সেন্টার করবে */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
 }
 
 @media (max-width: 480px) {
