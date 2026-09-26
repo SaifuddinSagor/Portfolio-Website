@@ -928,18 +928,29 @@ img{display:block;max-width:100%;}
   .hero-banner p { font-size: 0.82rem !important; }
   .g2, .g3, .cert-grid, .event-gallery { grid-template-columns: 1fr !important; }
   .edu-row { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
-  /* মোবাইলে পেপারের বিস্তারিত ও সার্টিফিকেট সুন্দরভাবে সাজানো */
+  /* ১. কার্ডের কলাম মোড ও স্বাভাবিক সাইজ */
   .pub-card {
+    display: flex !important;
     flex-direction: column !important;
-    align-items: stretch !important;
-    padding: 1.3rem 1.1rem !important;
+    align-items: center !important;
+    padding: 1.25rem 1rem !important;
+    height: auto !important;
   }
 
-  /* মোবাইলে সার্টিফিকেট বক্সটি মাঝখানে সুন্দর সাইজে সেন্টারে আনা */
-  .pub-card div[style*="180px"] {
+  /* ২. লেখার অতিরিক্ত ৪৮০px হাইট মুছে স্বাভাবিক সাইজ করা (বিশাল গ্যাপ দূর করবে) */
+  .pub-card div[style*="480px"] {
+    flex: none !important;
     width: 100% !important;
-    max-width: 260px !important;      /* মোবাইলের জন্য সুন্দর স্ট্যান্ডার্ড সাইজ */
-    margin: 1.2rem auto 0 auto !important; /* মাঝখানে সেন্টার করবে */
+    min-width: 0 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* ৩. সার্টিফিকেটটি মাঝখানে সুন্দর সাইজে সেন্টারে আনা */
+  .pub-card div[style*="180px"] {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 260px !important;
+    margin: 0.8rem auto 0 auto !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
