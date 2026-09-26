@@ -719,122 +719,96 @@ img{display:block;max-width:100%;}
 }
 
 /* ═══════════════════════════════════════
-   MOBILE — max 768px
+   MOBILE — max 768px (১০০% পারফেক্ট রেসপনসিভ ফিক্স)
 ═══════════════════════════════════════ */
 @media (max-width: 768px) {
- /* মোবাইল মেনু ব্যাকগ্রাউন্ড */
-  .nav-links {
-    background: #066839 !important; /* মোবাইলের ড্রপডাউন ব্যাকগ্রাউন্ড গ্রিন */
-  /* NAV */
-  /* NAV */
+  /* হেডার প্যাডিং মোবাইলে ঠিক করা */
+  .top-nav {
+    padding: 0 12px;
+  }
+  
+  .nav-logo-wrap {
+    margin-right: 8px;
+    gap: 6px;
+  }
+  
+  .nav-logo-text {
+    font-size: 0.76rem !important;
+    padding: 0 8px !important;
+    height: 28px !important;
+  }
+
+  /* মোবাইলে ভিউ সিভি বাটন স্পষ্টভাবে শো করা */
+  .top-nav a[href*="drive.google"] {
+    padding: 5px 9px !important;
+    font-size: 0.72rem !important;
+    margin-left: auto !important;
+  }
+
+  /* মোবাইলে মেনু হাইড থাকবে এবং হ্যামবার্গারে ক্লিক করলে ড্রপডাউন হবে */
   .nav-links {
     display: none;
     position: fixed;
     top: 64px; left: 0; right: 0;
-    background: #066839;
+    background: #066839 !important;
     flex-direction: column;
-    padding: 0.5rem 0 1rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    z-index: 99;
+    padding: 0.5rem 0 1.5rem;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+    z-index: 999;
   }
-  .nav-links.open { display: flex; }
+  .nav-links.open {
+    display: flex !important;
+  }
   .nav-links li a {
     height: auto;
-    line-height: 1;
-    padding: 0.85rem 1.5rem;
+    line-height: 1.2;
+    padding: 1rem 1.5rem;
     border-bottom: none;
-    border-left: 3px solid transparent;
-    font-size: 0.9rem;
+    border-left: 4px solid transparent;
+    font-size: 0.95rem;
   }
   .nav-links li a.active,
   .nav-links li a:hover {
-    border-left-color: #86efac;
-    border-bottom-color: transparent;
-    background: rgba(255,255,255,0.1);
+    border-left-color: #86efac !important;
+    background: rgba(255,255,255,0.1) !important;
   }
-}
-  .nav-hamburger { display: flex; }
-  .nav-logo-text { font-size: 0.88rem; }
 
-  /* HERO */
-  .hero-banner { min-height: 180px; padding: 2rem 1.25rem; }
-  .hero-banner h1 { font-size: 1.7rem; }
-  .hero-banner p { font-size: 0.82rem; }
-  .section-banner { min-height: 110px; padding: 1.5rem; }
-  .section-banner h1 { font-size: 1.5rem; }
-
-  /* CONTENT */
-  .content-wrap { padding: 1.25rem; }
-  .content-wrap.wide { padding: 1.25rem; }
-
-  /* HOME */
-  .home-body { grid-template-columns: 1fr; gap: 1.5rem; }
-  .home-photo { align-items: center; }
-  .profile-photo-wrap { max-width: 220px; }
-  .home-text blockquote { font-size: 0.9rem; }
-  .home-text p { font-size: 0.87rem; }
-
-  /* GOOGLE SCHOLAR BANNER */
-  .gs-banner { padding: 1rem 1.25rem; }
-  .gs-banner-inner { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-  .gs-btn { width: 100%; text-align: center; }
-
-  /* NEWS */
-  .news-section { margin-top: 1.5rem; }
-  .news-section h2 { font-size: 1.3rem; }
-  .news-item { font-size: 0.82rem; }
-
-  /* SOCIAL */
-  .social-section { padding: 1.5rem 1rem; }
-  .social-icons a { width: 42px; height: 42px; }
-
-  /* EDUCATION */
-  .edu-quote-strip { padding: 1.25rem; }
-  .edu-row {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-    padding: 1.5rem 0;
+  /* হ্যামবার্গার বাটন মোবাইলে শো করবে */
+  .nav-hamburger {
+    display: flex !important;
   }
-  .edu-inst-name { font-size: 1.1rem; }
-  .edu-dept { font-size: 0.85rem; margin-bottom: 0.75rem; }
-  .edu-desc { font-size: 0.84rem; }
 
-  /* CARDS */
-  .edu-card, .pub-card { padding: 1.1rem 1.25rem; }
-  .ec-title { font-size: 0.92rem; }
-  .pub-title { font-size: 0.88rem; }
+  /* হোমপেইজের ছবি ও বায়ো বক্স একটার নিচে আরেকটা নামবে */
+  .content-wrap {
+    padding: 1.2rem !important;
+  }
+  .home-body {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  .home-photo {
+    align-items: center;
+  }
+  .profile-photo-wrap {
+    max-width: 220px !important;
+  }
+  .home-text {
+    padding: 1.2rem !important;
+  }
 
-  /* PUB TABS */
-  .pub-tabs { gap: 0; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; }
-  .pub-tab { padding: 0.6rem 0.75rem; font-size: 0.75rem; flex-shrink: 0; }
-  .tab-count { display: none; }
+  /* ৬টি বক্স মোবাইলে ১ কলামে সাজানো */
+  div[style*="grid-template-columns: repeat(2, 1fr)"] {
+    grid-template-columns: 1fr !important;
+    gap: 1.2rem !important;
+  }
 
-  /* GRIDS */
-  .g2, .g3, .cert-grid { grid-template-columns: 1fr; }
-
-  /* EVENT GALLERY */
-  .event-gallery { grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .event-caption { font-size: 0.75rem; }
-
-  /* SKILLS */
-  .sg { padding: 1rem; }
-  .sp { font-size: 0.72rem; padding: 0.2rem 0.55rem; }
-
-  /* DATASETS */
-  .g3 { grid-template-columns: 1fr; }
-
-  /* MODAL */
-  .modal-img { max-width: 95vw; max-height: 85vh; }
-  .modal-close { top: 0.75rem; right: 0.75rem; width: 36px; height: 36px; }
-
-  /* TIMELINE */
-  .timeline { padding-left: 1.5rem; }
-  .tl-dot { left: -1.5rem; }
-
-  /* SECTION HEADING */
-  .sh { font-size: 1.1rem; }
+  /* অন্যান্য সেকশন মোবাইলে অ্যাডজাস্ট */
+  .hero-banner { min-height: 200px; padding: 2rem 1rem; }
+  .hero-banner h1 { font-size: 1.6rem; }
+  .hero-banner p { font-size: 0.8rem; }
+  .g2, .g3, .cert-grid, .event-gallery { grid-template-columns: 1fr !important; }
+  .edu-row { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
 }
-
 /* ═══════════════════════════════════════
    SMALL MOBILE — max 480px
 ═══════════════════════════════════════ */
