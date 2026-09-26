@@ -26,7 +26,7 @@ img{display:block;max-width:100%;}
 .nav-links li a.active{color:#fff;border-bottom-color:#86efac;}
 .nav-logo-wrap{
   display:flex;align-items:center;gap:10px;
-  margin-right:32px;cursor:pointer;
+  margin-right:24px;cursor:pointer;
   text-decoration:none;
 }
 .nav-logo-img{
@@ -39,25 +39,64 @@ img{display:block;max-width:100%;}
 }
 .nav-logo-img img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
 .nav-logo-img .ph-icon{color:rgba(255,255,255,0.4);font-size:1.2rem;}
+
+/* ── View CV বাটনের সমান হাইট ও হুবহু স্টাইল ── */
 .nav-logo-text{
-  font-size:0.95rem;font-weight:500;color:#fff;white-space:nowrap;
+  display:inline-flex;
+  align-items:center;
+  height:31px;                         /* View CV এর সমান উচ্চতা */
+  background:#ffffff;                  /* সাদা ব্যাকগ্রাউন্ড */
+  color:#066839;                      /* ডার্টমাউথ গ্রিন টেক্সট */
+  padding:0 14px;                     /* পারফেক্ট প্যাডিং */
+  border-radius:4px;                  /* সমান বর্ডার রেডিয়াস */
+  font-family:'Roboto Slab',serif;
+  font-size:0.82rem;                  /* সমান ফন্ট সাইজ */
+  font-weight:700;
+  white-space:nowrap;
+  box-shadow:0 2px 5px rgba(0,0,0,0.2);
+  transition:transform 0.15s ease;
+}
+
+.nav-logo-wrap:hover .nav-logo-text{
+  transform:translateY(-1px);
 }
 #navPhotoInput{display:none;}
 
 .nav-links{display:flex;align-items:center;gap:0;list-style:none;}
-.nav-links li a{
-  display:block;
-  height:64px;line-height:64px;
-  padding:0 16px;
-  font-size:0.83rem;font-weight:500;
-  color:rgba(255,255,255,0.75);
-  text-decoration:none;
-  border-bottom:3px solid transparent;
-  transition:color 0.15s,border-color 0.15s;
-  white-space:nowrap;
+/* ── NAV LINKS (একদম ১০০% উজ্জ্বল ও শার্প সাদা, কোনো ঝাপসা ভাব থাকবে না) ── */
+.nav-links li a {
+  display: block;
+  height: 64px;
+  line-height: 64px;
+  padding: 0 16px;
+  font-family: 'Roboto Slab', serif;
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: #ffffff !important;           /* সব লেখা ১০০% পিউর সাদা */
+  opacity: 1 !important;              /* কোনো আবছা বা হালকা ভাব থাকবে না */
+  text-decoration: none;
+  border-bottom: 3.5px solid transparent;
+  white-space: nowrap;
+  
+  /* লেখাগুলোকে একদম শার্প ও পরিষ্কার করার জন্য */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); /* লেখার কিনারা স্পষ্ট ফুটিয়ে তুলবে */
+  transition: all 0.2s ease;
 }
-.nav-links li a:hover{color:#fff;text-decoration:none;}
-.nav-links li a.active{color:#fff;border-bottom-color:#8ab4f8;}
+
+.nav-links li a:hover {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  text-decoration: none;
+}
+
+.nav-links li a.active {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  border-bottom-color: #ffffff !important; /* অ্যাক্টিভ পেইজের নিচে সলিড সাদা আন্ডারলাইন */
+}
 
 .nav-search{
   margin-left:auto;
@@ -71,26 +110,63 @@ img{display:block;max-width:100%;}
 .page{display:none;padding-top:64px;min-height:100vh;}
 .page.active{display:block;}
 
-/* ── HERO BANNER ── */
-.hero-banner{
-  background:
-    linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),
-    url('https://shorturl.at/PTWJE') center/cover no-repeat;
-  min-height:260px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:3rem 2rem;
-  color:#fff;
+/* ── HERO BANNER SLIDESHOW ── */
+.hero-banner {
+  position: relative;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #fff;
+  overflow: hidden;
 }
-.hero-banner h1{
-  font-family:'Roboto Slab',serif;
-  font-size:2.4rem;font-weight:700;
-  margin-bottom:0.5rem;
-  text-shadow:0 2px 8px rgba(0,0,0,0.4);
+
+/* স্লাইডারের ছবিগুলো */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out; /* স্মুথ ট্রানজিশন */
+  z-index: 1;
 }
-.hero-banner p{
-  font-size:0.95rem;font-weight:300;
-  opacity:0.9;margin-top:0.25rem;
-  text-shadow:0 1px 4px rgba(0,0,0,0.4);
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+/* ছবির ওপর ডার্ক ওভারলে (যাতে লেখা স্পষ্ট পড়া যায়) */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+/* লেখার কনটেন্ট */
+.hero-content {
+  position: relative;
+  z-index: 3;
+}
+
+.hero-banner h1 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.hero-banner p {
+  font-size: 0.95rem;
+  font-weight: 400;
+  opacity: 0.95;
+  margin-top: 0.25rem;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
 }
 
 /* ── SECTION HERO (for inner pages) ── */
@@ -781,7 +857,7 @@ img{display:block;max-width:100%;}
 <nav class="top-nav">
   <div class="nav-logo-wrap" onclick="showPage('home')">
     <div class="nav-logo-img">
-      <img id="navImg" src="img/Profile.jpg" alt="Saifuddin Sagor" style="display:block;">
+      <img id="navImg" src="img/Profile.png" alt="Saifuddin Sagor" style="display:block;">
       <span class="ph-icon" id="navPh" style="display:none;">👤</span>
     </div>
     <span class="nav-logo-text">Saifuddin Sagor</span>
@@ -818,10 +894,25 @@ img{display:block;max-width:100%;}
 <!-- ═══════════════ HOME ═══════════════ -->
 <div class="page active" id="page-home">
 
-  <div class="hero-banner">
-    <h1>Saifuddin Sagor</h1>
-    <p>BSc Student, Department of CSE, Daffodil International University</p>
-    <p>Research Assistant · AI & Machine Learning</p>
+  <!-- ── 5 Images Slideshow Hero Banner ── -->
+  <div class="hero-banner" id="heroBanner">
+    
+    <!-- স্লাইডারের ৫টি ছবি (আপনার প্রজেক্টে থাকা ছবিগুলো) -->
+    <div class="hero-slide active" style="background-image: url('img/Daffodil1.jpg');"></div>
+    <div class="hero-slide" style="background-image: url('img/Daffodil2.jpg');"></div>
+    <div class="hero-slide" style="background-image: url('img/DIU_Image.jpg');"></div>
+    <div class="hero-slide" style="background-image: url('img/Lab1.jpg');"></div>
+    <div class="hero-slide" style="background-image: url('img/Club3.jpg');"></div>
+    
+    <!-- ডার্ক ওভারলে -->
+    <div class="hero-overlay"></div>
+
+    <!-- টেক্সট কনটেন্ট -->
+    <div class="hero-content">
+      <h1>Saifuddin Sagor</h1>
+      <p>BSc Student, Department of CSE, Daffodil International University</p>
+      <p>Research Assistant · AI & Machine Learning</p>
+    </div>
   </div>
 
   <div class="content-wrap">
@@ -829,68 +920,232 @@ img{display:block;max-width:100%;}
 
       <!-- Photo col -->
       <div class="home-photo">
-        <div class="profile-photo-wrap">
+        <div class="profile-photo-wrap" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); overflow: hidden;">
           <div id="profilePh" style="display:none;"></div>
-          <img id="profileImg" src="img/Profile.jpg" alt="Saifuddin Sagor" style="width:100%;height:100%;object-fit:cover;">
+          <img id="profileImg" src="img/Profile.png" alt="Saifuddin Sagor" style="width:100%;height:100%;object-fit:cover;">
         </div>
       </div>
 
-      <!-- Text col -->
-      <div class="home-text">
-        <blockquote>Accuracy without interpretability is incomplete science — I build models that explain themselves.</blockquote>
-        <p class="quote-attr">— Research philosophy, Saifuddin Sagor</p>
+      <!-- Text col: হালকা গ্রিন ব্যাকগ্রাউন্ড বক্স এবং Justified টেক্সট -->
+      <div class="home-text" style="background: #f0f7f3; border: 1px solid #d2e5d9; border-top: 3.5px solid #066839; border-radius: 8px; padding: 1.8rem 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.04); text-align: justify;">
+        
+        <!-- Quote -->
+        <blockquote style="font-family: 'Roboto Slab', serif; font-size: 1.05rem; font-style: italic; color: #066839; line-height: 1.6; margin-bottom: 0.25rem; text-align: justify;">
+          Accuracy without interpretability is incomplete science — I build models that explain themselves.
+        </blockquote>
+        <!-- Clean, Professional Academic Bio (With Raw Data & Mendeley Integration) -->
+        <p style="font-size: 0.94rem; color: #202124; line-height: 1.85; margin-bottom: 1.2rem; text-align: justify;">
+          I am <strong>Saifuddin Sagor</strong>, a Computer Science & Engineering graduate from <strong>Daffodil International University (DIU)</strong>, Bangladesh. Currently, I work as a <strong>Research Assistant at DIU</strong>, a <strong>Lead Researcher at SynthaNano Lab</strong>, and a <strong>Research Associate at Nexcure Lab</strong>. My research focuses on <strong>Machine Learning, Deep Learning, Computer Vision, and Natural Language Processing (NLP)</strong>, with a strong commitment to building reliable, transparent, and deployment-ready AI systems. I work extensively with modern deep learning architectures—including <strong>Convolutional Neural Networks (CNNs), Vision Transformers (ViTs), Mamba, and Graph Neural Networks (GNNs)</strong>—integrated with Explainable AI (XAI) to solve real-world challenges in <strong>precision agriculture</strong> and <strong>healthcare diagnostics</strong>. My research has been published in premier scientific venues, including journals by <strong>Nature Portfolio</strong> and <strong>Elsevier</strong>, conference proceedings with <strong>IEEE</strong> and <strong>Springer</strong>, a book chapter with <strong>Taylor & Francis</strong>, and preprints on <strong>arXiv</strong>. Dedicated to open science, I actively collect real-world raw data from the field and curate multiple benchmark datasets published on <strong>Mendeley Data</strong> to support reproducible research globally. Beyond research, I also serve the scientific community as an invited international journal peer reviewer and academic mentor.
+        </p>
 
-        <p>I am <strong>Saifuddin Sagor</strong>, a final-year undergraduate researcher in Computer Science & Engineering at <strong>Daffodil International University</strong>, Dhaka, Bangladesh. My work sits at the intersection of <strong>deep learning, computer vision, and Explainable AI</strong> — with a focus on building transparent, deployment-ready models for agricultural and medical image analysis.</p>
-
-        <p>My undergraduate thesis, <strong>LXViT</strong>, proposes a hybrid hierarchical architecture fusing Xception's deep convolutional feature extraction with Vision Transformer attention mechanisms for multi-class lemon leaf disease classification. The framework incorporates both <strong>LIME and SHAP</strong> post-hoc explainability methods to ensure clinical and agronomic interpretability — addressing one of the core limitations of black-box deep learning in high-stakes domains.</p>
-
-        <p>As a <strong>Research Assistant</strong> under <strong>Asst. Prof. MD Masum Billah</strong> (DIU), I have contributed to <strong>2 Q1/Scopus-indexed Elsevier journal papers</strong> and <strong>12 peer-reviewed conference papers</strong> spanning IEEE ICCIT 2025, IEEE QPAIN 2026, Springer ANTIC 2025, and BIM 2025. My research spans plant disease detection (lemon, pomelo, jackfruit, guava, papaya, lychee, medicinal leaves), NLP-based mental health detection, medical image analysis (cervical cancer, sperm morphology), and social behaviour prediction — reflecting both domain breadth and methodological depth.</p>
-
-        <p>I have curated and publicly released <strong>14 open-access datasets</strong> on Mendeley Data — covering multi-crop leaf diseases, medicinal plants, clinical sperm analysis, and social surveys — contributing directly to the reproducibility and advancement of agricultural AI research globally.</p>
-
-        <p>Beyond research, I serve as <strong>Joint Lead Executive</strong> of the DIU Cyber Security Club (2025–2026) and as an Executive Member of the <strong>4IR Research Cell</strong>, where I mentor junior researchers in academic writing, dataset curation, and paper submission workflows.</p>
-
-        <div class="contact-block">
-          <strong>Contact:</strong><br>
-          Email: <a href="mailto:sagor15-6398@s.diu.edu.bd">sagor15-6398@s.diu.edu.bd</a> &nbsp;|&nbsp; <a href="mailto:saifuddinsagor01@gmail.com">saifuddinsagor01@gmail.com</a><br>
-          Address: Toragor, Hajigonj, Chandpur, Bangladesh
+        <!-- ── Key Highlights Box (Justified) ── -->
+        <div style="background: #ffffff; border: 1px solid #d2e5d9; border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 1.2rem; box-shadow: 0 1px 4px rgba(0,0,0,0.03);">
+          <p style="font-size: 0.82rem; font-weight: 700; color: #066839; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.06em; text-align: left;">Key Research Highlights:</p>
+          <ul style="padding-left: 1.2rem; font-size: 0.88rem; color: #3c4043; line-height: 1.75; margin: 0; text-align: justify;">
+            <li><strong>Publications:</strong> Peer-reviewed articles in <strong>Springer Nature (<em>Scientific Reports</em>, Q1)</strong>, <strong>Elsevier (<em>Data in Brief</em>, Q1)</strong>, and top IEEE conferences.</li>
+            <li><strong>Open Science:</strong> Curated and released <strong>14 open-access benchmark datasets</strong> on Mendeley Data across agro-vision and clinical diagnostics.</li>
+            <li><strong>Leadership:</strong> Serving as <strong>Joint Lead Executive</strong> of the DIU Cyber Security Club and mentor at the <strong>4IR Research Cell</strong>.</li>
+          </ul>
         </div>
+
+        <!-- Contact & Location -->
+        <div class="contact-block" style="font-size: 0.88rem; color: #3c4043; line-height: 1.7; border-top: 1px solid #d2e5d9; padding-top: 0.9rem; margin-top: 0.5rem;">
+          <strong>Contact:</strong> 
+          <a href="mailto:sagor15-6398@s.diu.edu.bd" style="color: #066839; font-weight: 600;">sagor15-6398@s.diu.edu.bd</a>
+          <br 
+         <strong>Phone / WhatsApp:</strong>
+              <a href="tel:+8801998276653" style="color: #066839; font-weight: 600; text-decoration: none;">+880 1998-276653</a> 
+          <br
+          <strong>Location:</strong> Dhaka, Bangladesh
+        </div>
+
       </div>
     </div>
   </div>
 
-  <!-- News -->
-  <div style="background:#fff;border-top:1px solid #e8eaed;padding:2.5rem 3rem;">
-    <div class="news-section" style="margin-top:0;">
-      <h2>News and Updates</h2>
-      <ul class="news-list">
-        <li class="news-item" style="background:#f0f4ff;border-radius:6px;padding:0.75rem 1rem;border-bottom:none;margin-bottom:0.5rem;">
-          <span>🎓 <strong>Google Scholar Profile</strong> — View all my publications, citations and h-index. &nbsp;<a href="https://scholar.google.com/citations?user=sxMphegAAAAJ&hl=en" target="_blank" style="color:#1a73e8;font-weight:600;">View Profile →</a></span>
-        </li>
-        <li class="news-item"><span class="news-bullet"></span><span>A research article titled "<strong>Agri-Vision Bangladesh: A Multi-Crop Augmented Image Dataset for Automated Disease Diagnosis</strong>" was published in <em>Data in Brief</em>, Elsevier [Q1, Scopus] in 2026. <a href="https://doi.org/10.1016/j.dib.2026.112528" target="_blank" style="color:#1a73e8;font-weight:600;">DOI →</a></span></li>
-        <li class="news-item"><span class="news-bullet"></span><span>A research article titled "<strong>A comprehensive combined dataset on Hibiscus and Tea plant leaf disease images</strong>" was published in <em>Data in Brief</em>, Elsevier [Q1, Scopus] in 2025. <a href="https://doi.org/10.1016/j.dib.2025.112357" target="_blank" style="color:#1a73e8;font-weight:600;">DOI →</a></span></li>
-        <li class="news-item"><span class="news-bullet"></span><span>A paper titled "<strong>Optimizing Depression Detection in Low-Resource Settings: A Comparative Study of Transformers and LoRA on Bangla and English Social Media</strong>" was presented at IEEE QPAIN 2026 (CUET, Chattogram) in April 2026. <a href="https://doi.org/10.1109/QPAIN69676.2026.11546347" target="_blank" style="color:#1a73e8;font-weight:600;">DOI →</a></span></li>
-        <li class="news-item"><span class="news-bullet"></span><span>Appointed as <strong>Joint Lead Executive</strong> of the Cyber Security Club, Daffodil International University for the session 2025–2026.</span></li>
-        <li class="news-item"><span class="news-bullet"></span><span>Completed <a href="https://www.credly.com/go/NW0dqG1c" target="_blank" style="color:#1a73e8;font-weight:600;">AWS Academy Cloud Foundations</a> (20 hours) — credential issued March 2026.</span></li>
-        <li class="news-item"><span class="news-bullet"></span><span>Volunteered at the <strong>International Conference on Intelligent Data Analysis and Applications (IDAA 2025)</strong>, held on December 12–13, 2025 at Daffodil International University, Dhaka.</span></li>
-        <li class="news-item"><span class="news-bullet"></span><span>[1] "<strong>DMX: A Weighted Softmax Fusion of Heterogeneous CNNs for Burmese Leaf Disease Classification</strong>" presented at <strong>IEEE ICCIT 2025</strong>, Cox's Bazar, December 2025. <a href="https://doi.org/10.1109/ICCIT68739.2025.11491233" target="_blank" style="color:#1a73e8;font-weight:600;">DOI →</a></span></li>
-        <li class="news-item"><span class="news-bullet"></span><span>[2] "<strong>Efficient Pomelo Leaf Disease Detection Using Transfer Learning and VIR Ensemble Method</strong>" presented at <strong>IEEE ICCIT 2025</strong>, Cox's Bazar, December 2025. <a href="https://doi.org/10.1109/ICCIT68739.2025.11491063" target="_blank" style="color:#1a73e8;font-weight:600;">DOI →</a></span></li>
-        <li class="news-item"><span class="news-bullet"></span><span>[3] "<strong>A Transfer Learning-Based Hybrid Framework Combining ResNet101 and ViT-B16 for Jackfruit Leaf Disease Classification</strong>" presented at <strong>IEEE ICCIT 2025</strong>, Cox's Bazar, December 2025. <a href="https://ieeexplore.ieee.org/abstract/document/11491607/" target="_blank" style="color:#1a73e8;font-weight:600;">DOI →</a></span></li>
-        <li class="news-item"><span class="news-bullet"></span><span>Paper presented at <strong>BIM 2025</strong> (3rd Int'l Conference on Big Data, IoT and ML): "GViT: A Customized Vision Transformer Model for Guava Leaf Disease Detection" — Dhaka International University, September 2025.</span></li>
-      </ul>
+<!-- ── 6 Core Sections Overview Grid (Live Click & Nav Line Shift Fix) ── -->
+  <div class="content-wrap" style="padding-top: 1rem; padding-bottom: 2.5rem; min-height: auto; border-top: 1px solid #e8eaed;">
+    
+    <!-- হেডিং ব্যানার বক্স -->
+    <div style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin-bottom: 1.8rem; font-family: 'Roboto Slab', serif; font-size: 1.15rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <span style="display: flex; align-items: center; gap: 8px;">
+        📌 Explore My Portfolio
+      </span>
+      <span style="font-size: 0.72rem; background: rgba(255,255,255,0.22); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 600;">
+        6 Main Sections
+      </span>
     </div>
-  </div>
 
-  <!-- Social -->
-  <div class="social-section">
-    <p>Want to connect with me?</p>
-    <div class="social-icons">
-      <a href="https://www.linkedin.com/in/saifuddin-sagor-126381249" target="_blank" class="si-linkedin" title="LinkedIn"><span>in</span></a>
-      <a href="https://scholar.google.com/citations?user=sxMphegAAAAJ&hl=en" target="_blank" class="si-gs" title="Google Scholar"><span>GS</span></a>
-      <a href="https://www.researchgate.net/profile/Saifuddin-Sagor" target="_blank" style="background:#00ccbb;" title="ResearchGate"><span>RG</span></a>
-      <a href="https://orcid.org/0009-0006-4586-4197" target="_blank" style="background:#a6ce39;" title="ORCID"><span>iD</span></a>
-      <a href="https://data.mendeley.com/" target="_blank" style="background:#ff6900;" title="Mendeley"><span>MD</span></a>
-      <a href="mailto:sagor15-6398@s.diu.edu.bd" class="si-email" title="Email">✉</a>
+    <!-- ২ কলামের গ্রিড -->
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+      
+      <!-- Box 1: Education -->
+      <div style="background: #ffffff; border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; padding: 1.4rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h4 style="color: #066839; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 7px;">
+            🎓 Education
+          </h4>
+          <p style="font-size: 0.86rem; color: #4b5563; line-height: 1.65; margin-bottom: 1.1rem; text-align: justify;">
+            Graduated with a B.Sc. in Computer Science & Engineering from Daffodil International University (CGPA 3.01). Academic background focused on deep learning, algorithms, and applied mathematics.
+          </p>
+        </div>
+        <a href="#" onclick="document.querySelector('.nav-links a[onclick*=\'education\']').click(); return false;" style="display: inline-flex; align-items: center; gap: 5px; color: #066839; font-size: 0.84rem; font-weight: 700; text-decoration: none; border-bottom: 1.5px solid #066839; padding-bottom: 2px; width: fit-content; cursor: pointer;">
+          See Details →
+        </a>
+      </div>
+
+      <!-- Box 2: Research -->
+      <div style="background: #ffffff; border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; padding: 1.4rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h4 style="color: #066839; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 7px;">
+            🔬 Research & Thesis
+          </h4>
+          <p style="font-size: 0.86rem; color: #4b5563; line-height: 1.65; margin-bottom: 1.1rem; text-align: justify;">
+            Research interests in Computer Vision, Vision Transformers (ViT), and Explainable AI (XAI: Grad-CAM, LIME, SHAP). Undergraduate thesis on the LXViT hybrid hierarchical framework.
+          </p>
+        </div>
+        <a href="#" onclick="document.querySelector('.nav-links a[onclick*=\'research\']').click(); return false;" style="display: inline-flex; align-items: center; gap: 5px; color: #066839; font-size: 0.84rem; font-weight: 700; text-decoration: none; border-bottom: 1.5px solid #066839; padding-bottom: 2px; width: fit-content; cursor: pointer;">
+          See Details →
+        </a>
+      </div>
+
+      <!-- Box 3: Publications -->
+      <div style="background: #ffffff; border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; padding: 1.4rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h4 style="color: #066839; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 7px;">
+            📰 Publications
+          </h4>
+          <p style="font-size: 0.86rem; color: #4b5563; line-height: 1.65; margin-bottom: 1.1rem; text-align: justify;">
+            Author of 4 Q1 journal articles in Nature (<em>Scientific Reports</em>) & Elsevier (<em>Data in Brief</em>), 12+ IEEE/Springer conference papers, and 14 open-access benchmark datasets.
+          </p>
+        </div>
+        <a href="#" onclick="document.querySelector('.nav-links a[onclick*=\'publications\']').click(); return false;" style="display: inline-flex; align-items: center; gap: 5px; color: #066839; font-size: 0.84rem; font-weight: 700; text-decoration: none; border-bottom: 1.5px solid #066839; padding-bottom: 2px; width: fit-content; cursor: pointer;">
+          See Details →
+        </a>
+      </div>
+
+      <!-- Box 4: Technical Skills -->
+      <div style="background: #ffffff; border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; padding: 1.4rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h4 style="color: #066839; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 7px;">
+            ⚡ Technical Skills
+          </h4>
+          <p style="font-size: 0.86rem; color: #4b5563; line-height: 1.65; margin-bottom: 1.1rem; text-align: justify;">
+            Strong technical proficiency in Python, PyTorch, TensorFlow, OpenCV, Scikit-learn, LaTeX, HuggingFace, AWS Cloud Foundations, Git/GitHub, and scientific research methodologies.
+          </p>
+        </div>
+        <a href="#" onclick="document.querySelector('.nav-links a[onclick*=\'skills\']').click(); return false;" style="display: inline-flex; align-items: center; gap: 5px; color: #066839; font-size: 0.84rem; font-weight: 700; text-decoration: none; border-bottom: 1.5px solid #066839; padding-bottom: 2px; width: fit-content; cursor: pointer;">
+          See Details →
+        </a>
+      </div>
+
+      <!-- Box 5: Work Experience -->
+      <div style="background: #ffffff; border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; padding: 1.4rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h4 style="color: #066839; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 7px;">
+            💼 Work Experience
+          </h4>
+          <p style="font-size: 0.86rem; color: #4b5563; line-height: 1.65; margin-bottom: 1.1rem; text-align: justify;">
+            Serving as Research Assistant in Deep Learning at DIU. Experience as Undergraduate Researcher at 4IR Research Cell, mentoring junior researchers, and Machine Learning engineering internships.
+          </p>
+        </div>
+        <a href="#" onclick="document.querySelector('.nav-links a[onclick*=\'experience\']').click(); return false;" style="display: inline-flex; align-items: center; gap: 5px; color: #066839; font-size: 0.84rem; font-weight: 700; text-decoration: none; border-bottom: 1.5px solid #066839; padding-bottom: 2px; width: fit-content; cursor: pointer;">
+          See Details →
+        </a>
+      </div>
+
+      <!-- Box 6: Activities & Leadership -->
+      <div style="background: #ffffff; border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; padding: 1.4rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h4 style="color: #066839; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 7px;">
+            🎖️ Activities & Leadership
+          </h4>
+          <p style="font-size: 0.86rem; color: #4b5563; line-height: 1.65; margin-bottom: 1.1rem; text-align: justify;">
+            Joint Lead Executive at DIU Cyber Security Club, organizing committee member of National CTF (DIU_CYBERCON), invited academic journal peer reviewer, and international conference volunteer.
+          </p>
+        </div>
+        <a href="#" onclick="document.querySelector('.nav-links a[onclick*=\'activities\']').click(); return false;" style="display: inline-flex; align-items: center; gap: 5px; color: #066839; font-size: 0.84rem; font-weight: 700; text-decoration: none; border-bottom: 1.5px solid #066839; padding-bottom: 2px; width: fit-content; cursor: pointer;">
+          See Details →
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+  
+
+  <!-- Social & Academic Profiles -->
+  <div class="social-section" style="text-align: center; padding: 2.5rem 1.5rem; background: #d2e5d9; border-top: 1px solid #e8eaed;">
+    <p style="font-size: 1.05rem; font-weight: 700; color: #202124; margin-bottom: 1.25rem; font-family: 'Roboto Slab', serif;">
+      Connect & Collaborate
+    </p>
+    
+    <div style="display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; max-width: 950px; margin: 0 auto;">
+      
+      <!-- 1. LinkedIn -->
+      <a href="https://www.linkedin.com/in/saifuddin-sagor-126381249" target="_blank" 
+         style="background: #0a66c2; color: #ffffff; padding: 7px 16px; border-radius: 25px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none; box-shadow: 0 2px 5px rgba(10,102,194,0.25); transition: transform 0.15s;" 
+         onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#ffffff"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        <span>LinkedIn</span>
+      </a>
+
+      <!-- 2. GitHub (নতুন যুক্ত করা হয়েছে) -->
+      <a href="https://github.com/SaifuddinSagor" target="_blank" 
+         style="background: #24292e; color: #ffffff; padding: 7px 16px; border-radius: 25px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none; box-shadow: 0 2px 5px rgba(36,41,46,0.3); transition: transform 0.15s;" 
+         onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span>GitHub</span>
+      </a>
+
+      <!-- 3. Google Scholar -->
+      <a href="https://scholar.google.com/citations?user=sxMphegAAAAJ&hl=en" target="_blank" 
+         style="background: #4285f4; color: #ffffff; padding: 7px 16px; border-radius: 25px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none; box-shadow: 0 2px 5px rgba(66,133,244,0.25); transition: transform 0.15s;" 
+         onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+        <span>Google Scholar</span>
+      </a>
+
+      <!-- 4. ResearchGate -->
+      <a href="https://www.researchgate.net/profile/Saifuddin-Sagor" target="_blank" 
+         style="background: #00ccbb; color: #ffffff; padding: 7px 16px; border-radius: 25px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none; box-shadow: 0 2px 5px rgba(0,204,187,0.25); transition: transform 0.15s;" 
+         onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <svg width="20" height="18" viewBox="0 0 24 20" style="vertical-align: middle;">
+          <text x="0" y="18" font-family="'Times New Roman', Georgia, serif" font-size="21" font-weight="bold" fill="#ffffff">R</text>
+          <text x="14" y="9" font-family="Arial, sans-serif" font-size="12" font-weight="900" fill="#ffffff">G</text>
+        </svg>
+        <span>ResearchGate</span>
+      </a>
+
+      <!-- 5. ORCID -->
+      <a href="https://orcid.org/0009-0006-4586-4197" target="_blank" 
+         style="background: #a6ce39; color: #ffffff; padding: 7px 16px; border-radius: 25px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none; box-shadow: 0 2px 5px rgba(166,206,57,0.25); transition: transform 0.15s;" 
+         onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#ffffff"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 3.844-1.459 3.844-3.722 0-2.016-1.378-3.722-3.844-3.722h-2.297z"/></svg>
+        <span>ORCID</span>
+      </a>
+
+      <!-- 6. Mendeley Data -->
+      <a href="https://data.mendeley.com/" target="_blank" 
+         style="background: #d11f26; color: #ffffff; padding: 7px 16px; border-radius: 25px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none; box-shadow: 0 2px 5px rgba(209,31,38,0.25); transition: transform 0.15s;" 
+         onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <svg width="20" height="18" viewBox="0 0 32 26" fill="#ffffff" style="vertical-align: middle;">
+          <circle cx="5" cy="21" r="3.6"/>
+          <circle cx="16" cy="21" r="3.6"/>
+          <circle cx="27" cy="21" r="3.6"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M16 2.5C11.6 2.5 8.2 6.1 7.2 10.5C6.1 11.2 5 12.8 5 15.5C7.2 15.5 8.8 13.5 10.5 13.5C12.2 13.5 13.5 15.5 16 15.5C18.5 15.5 19.8 13.5 21.5 13.5C23.2 13.5 24.8 15.5 27 15.5C27 12.8 25.9 11.2 24.8 10.5C23.8 6.1 20.4 2.5 16 2.5ZM16 7.2C17.8 7.2 19.2 8.7 19.2 10.5C19.2 12.3 17.8 13.8 16 13.8C14.2 13.8 12.8 12.3 12.8 10.5C12.8 8.7 14.2 7.2 16 7.2Z"/>
+        </svg>
+        <span>Mendeley Data</span>
+      </a>
+
+      <!-- 7. Email -->
+      <a href="mailto:sagor15-6398@s.diu.edu.bd" 
+         style="background: #ea4335; color: #ffffff; padding: 7px 16px; border-radius: 25px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 600; text-decoration: none; box-shadow: 0 2px 5px rgba(234,67,53,0.25); transition: transform 0.15s;" 
+         onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+        <span>Email</span>
+      </a>
+
     </div>
   </div>
 
@@ -902,78 +1157,125 @@ img{display:block;max-width:100%;}
 <div class="page" id="page-education">
   <div class="section-banner"><h1>Education</h1></div>
 
-  <!-- Quote strip -->
+  <!-- Quote strip
   <div class="edu-quote-strip">
     <p>"The roots of education are bitter, but the fruit is sweet."</p>
     <p class="edu-quote-attr">— Aristotle</p>
-  </div>
+  </div> -->
 
   <div class="content-wrap wide">
 
-    <!-- ── BSc DIU ── -->
-    <div class="edu-row">
-      <div class="edu-img-col">
-        <div class="edu-img-wrap">
-          <img id="eduMainImg1" src="img/DIU_Image.jpg" alt="DIU" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
-          <!-- <div class="edu-img-overlay">Change Photo</div> -->
+    <!-- ── 1. BSc DIU (ছবির মতো প্রিমিয়াম বক্স) ── -->
+    <div class="edu-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.75rem; margin-bottom: 2rem;">
+      <div class="edu-row" style="padding: 0; border-bottom: none; display: grid; grid-template-columns: 380px 1fr; gap: 2.5rem; align-items: center;">
+        <div class="edu-img-col">
+          <div class="edu-img-wrap" style="border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+            <img id="eduMainImg1" src="img/DIU_Image.jpg" alt="DIU" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+          </div>
         </div>
-      </div>
-      <div class="edu-text-col">
-        <h3 class="edu-inst-name">Daffodil International University</h3>
-        <p class="edu-dept">Department of Computer Science & Engineering</p>
-        <p class="edu-desc">My undergraduate journey at Daffodil International University has been a transformative experience — from learning the fundamentals of computer science to conducting real-world AI research on plant disease detection. Here I developed my thesis on a hybrid Xception-ViT deep learning framework with Explainable AI integration, and co-authored multiple Elsevier and IEEE publications alongside my supervisors.</p>
+        <div class="edu-text-col">
+          <h3 class="edu-inst-name" style="color: #066839; font-size: 1.35rem; font-weight: 700; text-align: left; margin-bottom: 0.3rem;">
+            🎓 Daffodil International University
+          </h3>
+          <p class="edu-dept" style="color: #1a73e8; font-weight: 600; font-size: 0.95rem; text-align: left; margin-bottom: 0.8rem;">
+            Department of Computer Science & Engineering
+          </p>
+          <p class="edu-desc" style="font-size: 0.88rem; color: #3c4043; line-height: 1.8; text-align: left;">
+            My undergraduate journey at Daffodil International University has been a transformative experience — from learning the fundamentals of computer science to conducting real-world AI research on plant disease detection. Here I developed my thesis on a hybrid Xception-ViT deep learning framework with Explainable AI integration, and co-authored multiple Elsevier and IEEE publications alongside my supervisors.
+          </p>
+          <div class="ec-badges" style="margin-top: 0.8rem;">
+            <span class="badge b-blue">B.Sc. in CSE</span>
+            <span class="badge b-green">CGPA: 3.01 / 4.00</span>
+            <span class="badge b-yellow">2022 – 2026</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- ── HSC Hajigonj Model College ── -->
-    <div class="edu-row">
-      <div class="edu-img-col">
-        <div class="edu-img-wrap">
-          <img id="eduMainImg2" src="img/Model_College.jpg" alt="Model College" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
-          <!-- <div class="edu-img-overlay">Change Photo</div> -->
+    <!-- ── 2. HSC Hajigonj Model College ── -->
+    <div class="edu-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.75rem; margin-bottom: 2rem;">
+      <div class="edu-row" style="padding: 0; border-bottom: none; display: grid; grid-template-columns: 380px 1fr; gap: 2.5rem; align-items: center;">
+        <div class="edu-img-col">
+          <div class="edu-img-wrap" style="border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+            <img id="eduMainImg2" src="img/Model_College.jpg" alt="Model College" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+          </div>
         </div>
-      </div>
-      <div class="edu-text-col">
-        <h3 class="edu-inst-name">Hajigonj Model Govt. College</h3>
-        <p class="edu-dept">Higher Secondary Certificate</p>
-        <p class="edu-desc">Hajigonj Model Govt. College shaped my foundational years in science education. The rigorous academic environment and dedicated faculty helped me build strong analytical skills and a love for problem-solving. This is where my interest in mathematics and science truly flourished, paving the way for my journey into computer science and engineering.</p>
+        <div class="edu-text-col">
+          <h3 class="edu-inst-name" style="color: #066839; font-size: 1.35rem; font-weight: 700; text-align: left; margin-bottom: 0.3rem;">
+            🏛️ Hajigonj Model Govt. College
+          </h3>
+          <p class="edu-dept" style="color: #1a73e8; font-weight: 600; font-size: 0.95rem; text-align: left; margin-bottom: 0.8rem;">
+            Higher Secondary Certificate (HSC) — Science
+          </p>
+          <p class="edu-desc" style="font-size: 0.88rem; color: #3c4043; line-height: 1.8; text-align: left;">
+            Hajigonj Model Govt. College shaped my foundational years in science education. The rigorous academic environment and dedicated faculty helped me build strong analytical skills and a love for problem-solving. This is where my interest in mathematics and science truly flourished, paving the way for my journey into computer science and engineering.
+          </p>
+          <div class="ec-badges" style="margin-top: 0.8rem;">
+            <span class="badge b-blue">Science</span>
+            <span class="badge b-gray">HSC</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- ── SSC Hajigonj Pilot ── -->
-    <div class="edu-row">
-      <div class="edu-img-col">
-        <div class="edu-img-wrap" >
-          <img id="eduMainImg3" src="img/Pilot_School.jpg" alt="Pilot School" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
-          <!-- <div class="edu-img-overlay">Change Photo</div> -->
+    <!-- ── 3. SSC Hajigonj Pilot ── -->
+    <div class="edu-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.75rem; margin-bottom: 2rem;">
+      <div class="edu-row" style="padding: 0; border-bottom: none; display: grid; grid-template-columns: 380px 1fr; gap: 2.5rem; align-items: center;">
+        <div class="edu-img-col">
+          <div class="edu-img-wrap" style="border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+            <img id="eduMainImg3" src="img/Pilot_School.jpg" alt="Pilot School" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+          </div>
         </div>
-      </div>
-      <div class="edu-text-col">
-        <h3 class="edu-inst-name">Hajigonj Pilot High School & College</h3>
-        <p class="edu-dept">Secondary School Certificate</p>
-        <p class="edu-desc">Hajigonj Pilot High School & College is where my academic story began. These formative years instilled in me discipline, curiosity, and a deep respect for learning. The school's nurturing environment and community spirit gave me the confidence to dream big and pursue excellence — values I carry with me to this day.</p>
+        <div class="edu-text-col">
+          <h3 class="edu-inst-name" style="color: #066839; font-size: 1.35rem; font-weight: 700; text-align: left; margin-bottom: 0.3rem;">
+            🏫 Hajigonj Pilot High School & College
+          </h3>
+          <p class="edu-dept" style="color: #1a73e8; font-weight: 600; font-size: 0.95rem; text-align: left; margin-bottom: 0.8rem;">
+            Secondary School Certificate (SSC) — Science
+          </p>
+          <p class="edu-desc" style="font-size: 0.88rem; color: #3c4043; line-height: 1.8; text-align: left;">
+            Hajigonj Pilot High School & College is where my academic story began. These formative years instilled in me discipline, curiosity, and a deep respect for learning. The school's nurturing environment and community spirit gave me the confidence to dream big and pursue excellence — values I carry with me to this day.
+          </p>
+          <div class="ec-badges" style="margin-top: 0.8rem;">
+            <span class="badge b-blue">Science</span>
+            <span class="badge b-gray">SSC</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- ── Research Experience ── -->
-    <h3 class="sh" style="margin-top:2.5rem;">Research Experience</h3>
-    <div class="edu-card">
-      <p class="ec-year">April 2025 – April 2026</p>
-      <p class="ec-title">Research Assistant</p>
-      <p class="ec-inst">Supervisor: MD Masum Billah — Assistant Professor, Daffodil International University, Dhaka</p>
+    <!-- ── Research Experience (গ্রিন ব্যানার হেডিং ও কার্ড) ── -->
+    <h3 style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin: 2.5rem 0 1.2rem; font-family: 'Roboto Slab', serif; font-size: 1.15rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 8px;">
+      🔬 Research Experience
+    </h3>
+
+    <div class="edu-card" style="border-top: 3.5px solid #066839; margin-bottom: 1.2rem;">
+      <p class="ec-year">April 2025 – Present</p>
+      <p class="ec-title" style="color: #066839; font-weight: 700; font-size: 1.05rem;">Research Assistant</p>
+      <p class="ec-inst">Supervisor: MD Masum Billah — Assistant Professor, Dept. of CSE, Daffodil International University, Dhaka</p>
       <p class="ec-body">Contributing to Elsevier journal publications, open dataset curation, and deep learning model development for agricultural leaf disease classification tasks.</p>
+      <div class="ec-badges">
+        <span class="badge b-blue">Deep Learning</span>
+        <span class="badge b-green">PyTorch</span>
+        <span class="badge b-yellow">Explainable AI</span>
+      </div>
     </div>
-    <div class="edu-card">
+
+    <div class="edu-card" style="border-top: 3.5px solid #066839; margin-bottom: 1.2rem;">
       <p class="ec-year">January 2024 – January 2025</p>
-      <p class="ec-title">Executive Member — 4IR Research Cell</p>
+      <p class="ec-title" style="color: #066839; font-weight: 700; font-size: 1.05rem;">Executive Member — 4IR Research Cell</p>
       <p class="ec-inst">Supervisors: Faruk Ahmed (Lecturer, Software Eng., DIU) · Dr. Md Taimur Ahad (Assoc. Prof., CSE, DIU)</p>
       <p class="ec-body">Mentored 10 junior research members in academic writing, dataset preparation, and paper submission. Coordinated under Dr. Ahad who supervised 15 research members across the cell.</p>
+      <div class="ec-badges">
+        <span class="badge b-orange">Medical AI</span>
+        <span class="badge b-blue">Computer Vision</span>
+        <span class="badge b-gray">Mentorship</span>
+      </div>
     </div>
 
   </div>
   <!-- <div class="site-footer">© 2026 Saifuddin Sagor. All rights reserved.</div> -->
 </div>
-
 
 <!-- ═══════════════ RESEARCH ═══════════════ -->
 <div class="page" id="page-research">
@@ -1052,7 +1354,7 @@ img{display:block;max-width:100%;}
     <!-- Tab buttons -->
     <div class="pub-tabs">
       <button class="pub-tab active" onclick="switchTab('journal',this)">📰 Journal Articles <span class="tab-count">4</span></button>
-      <button class="pub-tab" onclick="switchTab('conference',this)">🎤 Conference Papers <span class="tab-count">12</span></button>
+      <button class="pub-tab" onclick="switchTab('conference',this)">🎤 Conference Papers <span class="tab-count">11</span></button>
       <button class="pub-tab" onclick="switchTab('bookchapter',this)">📚 Book Chapters <span class="tab-count">1</span></button>
       <button class="pub-tab" onclick="switchTab('preprint',this)">📋 Preprints <span class="tab-count">1</span></button>
       <button class="pub-tab" onclick="switchTab('datasets',this)">📊 Datasets <span class="tab-count">14</span></button>
@@ -1062,22 +1364,22 @@ img{display:block;max-width:100%;}
     <div class="pub-panel active" id="tab-journal">
 
       <!-- ── Journal Articles Heading Box ── -->
-<div style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin-bottom: 1.5rem; font-family: 'Roboto Slab', serif; font-size: 1.12rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
-  <span style="display: flex; align-items: center; gap: 8px;">
-    📰 Journal Articles
-  </span>
-  <span style="font-size: 0.72rem; background: rgba(255,255,255,0.22); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.04em;">
-    Q1 Indexed · Nature & Elsevier
-  </span>
-</div>
+      <div style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin-bottom: 1.8rem; font-family: 'Roboto Slab', serif; font-size: 1.12rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <span style="display: flex; align-items: center; gap: 8px;">
+          📰 Journal Articles
+        </span>
+        <span style="font-size: 0.72rem; background: rgba(255,255,255,0.22); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.04em;">
+          Q1 Indexed · Nature & Elsevier
+        </span>
+      </div>
       
-            <!-- J3 (LXViT - Scientific Reports) -->
-      <div class="pub-card">
+      <!-- J3 (LXViT - Scientific Reports) -->
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem;">
         <p class="pub-type">📰 Journal · Nature (Scientific Reports) · Q1 · Scopus Indexed · 2026</p>
-        <p class="pub-title">[J3] LXViT: A Hybrid Hierarchical CNN-ViT Framework for Lemon Leaf Disease Classification with Multi-Method Explainable AI Integration</p>
+        <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">LXViT: A Hybrid Hierarchical CNN-ViT Framework for Lemon Leaf Disease Classification with Multi-Method Explainable AI Integration</p>
         <p class="pub-authors"><strong>Sagor, S.</strong>, Ahmed, F., Rahman, M. A., & Billah, M. M.</p>
         <p class="pub-venue"><em>Scientific Reports</em>. Springer Nature, 2026.</p>
-        <div class="ec-badges">
+        <div class="ec-badges" style="margin-top: 0.7rem;">
           <span class="badge b-yellow">Q1 · Scopus</span>
           <span class="badge b-green">Springer Nature</span>
           <span class="badge b-gray">2026</span>
@@ -1089,15 +1391,13 @@ img{display:block;max-width:100%;}
         <a href="https://doi.org/10.1038/s41598-026-71178-x" target="_blank" style="display:inline-block;margin-top:0.6rem;font-size:0.78rem;color:#1a73e8;">🔗 https://doi.org/10.1038/s41598-026-71178-x</a>
       </div>
 
-      
-
       <!-- J2 -->
-      <div class="pub-card">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem;">
         <p class="pub-type">📰 Journal · Elsevier · Q1 · Scopus Indexed · 2026</p>
-        <p class="pub-title">[J2] Agri-Vision Bangladesh: A Multi-Crop Augmented Image Dataset for Automated Disease Diagnosis in Bottle Gourd, Zucchini, Papaya, and Tomato</p>
+        <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">Agri-Vision Bangladesh: A Multi-Crop Augmented Image Dataset for Automated Disease Diagnosis in Bottle Gourd, Zucchini, Papaya, and Tomato</p>
         <p class="pub-authors">Billah, M. M., Rahman, M. A., <strong>Sagor, S.</strong>, Parvin, S., & Uddin, M. S.</p>
         <p class="pub-venue"><em>Data in Brief</em>, 112528. Elsevier, 2026.</p>
-        <div class="ec-badges">
+        <div class="ec-badges" style="margin-top: 0.7rem;">
           <span class="badge b-yellow">Q1 · Scopus</span>
           <span class="badge b-blue">Elsevier</span>
           <span class="badge b-gray">2026</span>
@@ -1109,13 +1409,13 @@ img{display:block;max-width:100%;}
         <a href="https://doi.org/10.1016/j.dib.2026.112528" target="_blank" style="display:inline-block;margin-top:0.6rem;font-size:0.78rem;color:#1a73e8;">🔗 https://doi.org/10.1016/j.dib.2026.112528</a>
       </div>
 
-      <!-- J3  -->
-    <div class="pub-card">
+      <!-- J1  -->
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem;">
         <p class="pub-type">📰 Journal · Elsevier · Q1 · Scopus Indexed · 2025</p>
-        <p class="pub-title">[J1] A comprehensive combined dataset on Hibiscus and Tea plant leaf disease images for classifications</p>
+        <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">A comprehensive combined dataset on Hibiscus and Tea plant leaf disease images for classifications</p>
         <p class="pub-authors">Billah, M. M., <strong>Sagor, S.</strong>, & Uddin, M. S.</p>
         <p class="pub-venue"><em>Data in Brief</em>, Volume 64, 112357. Elsevier, 2025.</p>
-        <div class="ec-badges">
+        <div class="ec-badges" style="margin-top: 0.7rem;">
           <span class="badge b-yellow">Q1 · Scopus</span>
           <span class="badge b-blue">Elsevier</span>
           <span class="badge b-gray">2025</span>
@@ -1128,12 +1428,12 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- J4 (CNN-ViT-GNN - Scientific Reports) -->
-      <div class="pub-card">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem;">
         <p class="pub-type">📰 Journal · Nature (Scientific Reports) · Q1 · Scopus Indexed · 2026</p>
-        <p class="pub-title">[J4] Explainable Hybrid Multi-Branch CNN–ViT–GNN Framework for Robust Hibiscus Leaf Disease Classification</p>
+        <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">Explainable Hybrid Multi-Branch CNN–ViT–GNN Framework for Robust Hibiscus Leaf Disease Classification</p>
         <p class="pub-authors">Billah, M. M., <strong>Sagor, S.</strong>, Hossain, S., Alahmadi, T. J., Moni, M. A., & Uddin, M. S.</p>
         <p class="pub-venue"><em>Scientific Reports</em>, Volume 16, Article 26647. Springer Nature, 2026.</p>
-        <div class="ec-badges">
+        <div class="ec-badges" style="margin-top: 0.7rem;">
           <span class="badge b-yellow">Q1 · Scopus</span>
           <span class="badge b-green">Springer Nature</span>
           <span class="badge b-gray">2026</span>
@@ -1149,24 +1449,25 @@ img{display:block;max-width:100%;}
 
    <!-- CONFERENCE -->
     <div class="pub-panel" id="tab-conference">
+      
       <!-- ── Conference Papers Heading Box ── -->
-<div style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin-bottom: 1.5rem; font-family: 'Roboto Slab', serif; font-size: 1.12rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
-  <span style="display: flex; align-items: center; gap: 8px;">
-    🎤 Conference Papers
-  </span>
-  <span style="font-size: 0.72rem; background: rgba(255,255,255,0.22); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.04em;">
-    Scopus Indexed
-  </span>
-</div>
+      <div style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin-bottom: 1.8rem; font-family: 'Roboto Slab', serif; font-size: 1.12rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <span style="display: flex; align-items: center; gap: 8px;">
+          🎤 Conference Papers
+        </span>
+        <span style="font-size: 0.72rem; background: rgba(255,255,255,0.22); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.04em;">
+          Scopus Indexed
+        </span>
+      </div>
 
       <!-- C1 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🎤 IEEE Conference · ICCIT 2025</p>
-          <p class="pub-title">[C1] DMX: A Weighted Softmax Fusion of Heterogeneous CNNs for Burmese Leaf Disease Classification</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">DMX: A Weighted Softmax Fusion of Heterogeneous CNNs for Burmese Leaf Disease Classification</p>
           <p class="pub-authors">Ahmed, F., <strong>Sagor, S.</strong>, Raza, D. M., & Billah, M. M.</p>
           <p class="pub-venue"><em>2025 28th International Conference on Computer and Information Technology (ICCIT)</em>, pp. 1654–1659. IEEE. Cox's Bazar, December 19–21, 2025.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-blue">IEEE</span>
             <span class="badge b-gray">ICCIT 2025</span>
             <a href="https://doi.org/10.1109/ICCIT68739.2025.11491233" target="_blank" style="display: inline-flex; align-items: center; gap: 5px; background-color: #dc2626; color: #ffffff; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); transition: opacity 0.2s ease;">
@@ -1176,7 +1477,6 @@ img{display:block;max-width:100%;}
           </div>
           <a href="https://doi.org/10.1109/ICCIT68739.2025.11491233" target="_blank" style="display:inline-block;margin-top:0.6rem;font-size:0.78rem;color:#1a73e8;">🔗 https://doi.org/10.1109/ICCIT68739.2025.11491233</a>
         </div>
-        <!-- Certificate Div (No overlay, text is below) -->
         <div style="flex: 0 0 180px; width: 180px; max-width: 100%; display: flex; flex-direction: column; align-items: center; gap: 5px;">
           <div style="width: 100%; aspect-ratio: 4/3; border-radius: 6px; overflow: hidden; border: 1px solid #dadce0; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.1);" title="Click to view full certificate" onclick="document.getElementById('mImg').src='img/ICCIT_Burmise_Grape.jpg'; document.getElementById('modal').classList.add('open');">
             <img src="img/ICCIT_Burmise_Grape.jpg" alt="Certificate" style="width: 100%; height: 100%; object-fit: cover;">
@@ -1186,13 +1486,13 @@ img{display:block;max-width:100%;}
       </div>
       
       <!-- C2 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🎤 IEEE Conference · ICCIT 2025</p>
-          <p class="pub-title">[C2] Efficient Pomelo Leaf Disease Detection Using Transfer Learning and VIR Ensemble Method</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">Efficient Pomelo Leaf Disease Detection Using Transfer Learning and VIR Ensemble Method</p>
           <p class="pub-authors">Rahman, M. A., Parvin, S., <strong>Sagor, S.</strong>, Shawon, F. I., Rafi, M. H., & Hossain, S.</p>
           <p class="pub-venue"><em>2025 28th International Conference on Computer and Information Technology (ICCIT)</em>, pp. 3882–3887. IEEE. Cox's Bazar, December 2025.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-blue">IEEE</span>
             <span class="badge b-gray">ICCIT 2025</span>
             <a href="https://doi.org/10.1109/ICCIT68739.2025.11491063" target="_blank" style="display: inline-flex; align-items: center; gap: 5px; background-color: #dc2626; color: #ffffff; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); transition: opacity 0.2s ease;">
@@ -1211,13 +1511,13 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- C3 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🎤 IEEE Conference · ICCIT 2025</p>
-          <p class="pub-title">[C3] A Transfer Learning-Based Fine-Tuned Hybrid Deep Learning Framework Combining ResNet101 and Vision Transformer (ViT-B16) for Enhanced Jackfruit Leaf Disease Classification and Detection</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">A Transfer Learning-Based Fine-Tuned Hybrid Deep Learning Framework Combining ResNet101 and Vision Transformer (ViT-B16) for Enhanced Jackfruit Leaf Disease Classification and Detection</p>
           <p class="pub-authors">Hossan, M. F., Riyad, T., Islam, S. J., Hasan, H., Faruk, A. B., & <strong>Sagor, S.</strong></p>
           <p class="pub-venue"><em>2025 28th International Conference on Computer and Information Technology (ICCIT)</em>, pp. 5377–5382. IEEE. Cox's Bazar, December 2025.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-blue">IEEE</span>
             <span class="badge b-gray">ICCIT 2025</span>
             <a href="https://ieeexplore.ieee.org/abstract/document/11491607/" target="_blank" style="display: inline-flex; align-items: center; gap: 5px; background-color: #dc2626; color: #ffffff; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); transition: opacity 0.2s ease;">
@@ -1236,13 +1536,13 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- C4 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🎤 IEEE Conference · QPAIN 2026</p>
-          <p class="pub-title">[C4] Optimizing Depression Detection in Low-Resource Settings: A Comparative Study of Transformers and LoRA on Bangla and English Social Media</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">Optimizing Depression Detection in Low-Resource Settings: A Comparative Study of Transformers and LoRA on Bangla and English Social Media</p>
           <p class="pub-authors"><strong>Sagor, S.</strong>, Hasan, M. R., Kadir, M. M., Rafi, M. H., Islam, M., & Hossain, S.</p>
           <p class="pub-venue"><em>2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence and Networking (QPAIN 2026)</em>, pp. 1–6. IEEE. CUET, Chattogram, April 16, 2026.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-blue">IEEE</span>
             <span class="badge b-orange">NLP</span>
             <span class="badge b-gray">QPAIN 2026</span>
@@ -1262,13 +1562,13 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- C5 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🎤 IEEE Conference · QPAIN 2026</p>
-          <p class="pub-title">[C5] A Machine Learning Stacking Ensemble for Cerebral Stroke Prediction and Early Risk Assessment</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">A Machine Learning Stacking Ensemble for Cerebral Stroke Prediction and Early Risk Assessment</p>
           <p class="pub-authors">Hossain, S., <strong>Sagor, S.</strong>, & Islam, J.</p>
           <p class="pub-venue"><em>2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence and Networking (QPAIN 2026)</em>, pp. 1–6. IEEE. April 16, 2026.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-blue">IEEE</span>
             <span class="badge b-orange">Medical AI</span>
             <span class="badge b-gray">QPAIN 2026</span>
@@ -1288,13 +1588,13 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- C6 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🎤 IEEE Conference · QPAIN 2026</p>
-          <p class="pub-title">[C6] Comparative Analysis of Machine Learning Algorithms for Multi-Class Bangla News</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">Comparative Analysis of Machine Learning Algorithms for Multi-Class Bangla News</p>
           <p class="pub-authors"><strong>Sagor, S.</strong>, Miah, M. A., Hossain, S., Shihan, S. H., Neloy, M. H. A., & Hossan, M. F.</p>
           <p class="pub-venue"><em>2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence and Networking (QPAIN 2026)</em>, pp. 1–6. IEEE. April 16, 2026.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-blue">IEEE</span>
             <span class="badge b-orange">NLP</span>
             <span class="badge b-gray">QPAIN 2026</span>
@@ -1314,13 +1614,13 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- C7 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🎤 IEEE Conference · QPAIN 2026</p>
-          <p class="pub-title">[C7] An Interpretable Ensemble Learning Framework for Predicting Academic Performance: Quantifying Social Media's Influence Through Explainable AI</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">An Interpretable Ensemble Learning Framework for Predicting Academic Performance: Quantifying Social Media's Influence Through Explainable AI</p>
           <p class="pub-authors">Hossain, S., Bhuiyan, M. A. H., <strong>Sagor, S.</strong>, Nishat, T. A., Monir, Z. H., & Aubdullah, M.</p>
           <p class="pub-venue"><em>2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence and Networking (QPAIN 2026)</em>, pp. 1–6. IEEE. April 16, 2026.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-blue">IEEE</span>
             <span class="badge b-yellow">Explainable AI</span>
             <span class="badge b-gray">QPAIN 2026</span>
@@ -1340,13 +1640,13 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- C8 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🎤 IEEE Conference · QPAIN 2026</p>
-          <p class="pub-title">[C8] Post-Hoc Model-Agnostic Interpretability of a Stacking Ensemble for Drug Addiction Analysis Using Multi-Fold Validation</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">Post-Hoc Model-Agnostic Interpretability of a Stacking Ensemble for Drug Addiction Analysis Using Multi-Fold Validation</p>
           <p class="pub-authors">Hossain, S., Kadir, M. M., Rafi, M. H., Hasan, M. R., <strong>Sagor, S.</strong>, & Rahman, M. A.</p>
           <p class="pub-venue"><em>2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence and Networking (QPAIN 2026)</em>, pp. 1–6. IEEE. April 16, 2026.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-blue">IEEE</span>
             <span class="badge b-yellow">Explainable AI</span>
             <span class="badge b-gray">QPAIN 2026</span>
@@ -1366,17 +1666,17 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- C9 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🎤 IEEE Conference · QPAIN 2026</p>
-          <p class="pub-title">[C9] LMViT: A Lightweight Hybrid MobileNet–Vision Transformer Model for Real-Time Lychee Leaf Disease Classification</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">LMViT: A Lightweight Hybrid MobileNet–Vision Transformer Model for Real-Time Lychee Leaf Disease Classification</p>
           <p class="pub-authors">Hasan, H., Hossain, S., <strong>Sagor, S.</strong>, Faruk, A. B., Emon, M., & Hossan, M. F.</p>
           <p class="pub-venue"><em>2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence and Networking (QPAIN 2026)</em>, pp. 1–6. IEEE. April 16, 2026.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-blue">IEEE</span>
             <span class="badge b-gray">QPAIN 2026</span>
             <a href="https://doi.org/10.1109/QPAIN69676.2026.11545711" target="_blank" style="display: inline-flex; align-items: center; gap: 5px; background-color: #dc2626; color: #ffffff; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); transition: opacity 0.2s ease;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               <span>View PDF</span>
             </a>
           </div>
@@ -1391,13 +1691,13 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- C10 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🎤 IEEE Conference · QPAIN 2026</p>
-          <p class="pub-title">[C10] SwinEffNet: A Hybrid Transformer-CNN Architecture for Lemon Leaf Disease</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">SwinEffNet: A Hybrid Transformer-CNN Architecture for Lemon Leaf Disease</p>
           <p class="pub-authors"><strong>Sagor, S.</strong>, Hossain, S., Hossan, M. F., Faruk, A. B., Hasan, H., & Bhuiyan, M. A. H.</p>
           <p class="pub-venue"><em>2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence and Networking (QPAIN 2026)</em>, pp. 1–6. IEEE. April 16, 2026.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-blue">IEEE</span>
             <span class="badge b-gray">QPAIN 2026</span>
             <a href="https://doi.org/10.1109/QPAIN69676.2026.11546032" target="_blank" style="display: inline-flex; align-items: center; gap: 5px; background-color: #dc2626; color: #ffffff; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); transition: opacity 0.2s ease;">
@@ -1416,13 +1716,13 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- C11 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🎤 Springer Conference · ANTIC 2025</p>
-          <p class="pub-title">[C11] Explainable Hybrid Deep Learning for Medicinal Leaf Disease Classification: R50-MViT with LIME and Grad-CAM Interpretability</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">Explainable Hybrid Deep Learning for Medicinal Leaf Disease Classification: R50-MViT with LIME and Grad-CAM Interpretability</p>
           <p class="pub-authors"><strong>Sagor, S.</strong>, Hossain, S., Shawon, F. I., Parvin, S., Fakir, M. M. R., & Al Zunaed Farabe, M. Z.</p>
           <p class="pub-venue"><em>Proc. 5th Int. Conf. Advanced Network Technologies and Intelligent Computing (ANTIC 2025)</em>, Volume 2921, pp. 568–587. Springer Nature. Published: July 2, 2026.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-green">Springer Nature</span>
             <span class="badge b-gray">ANTIC 2025</span>
             <span class="badge b-yellow">Explainable AI</span>
@@ -1442,13 +1742,13 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- BIM 2025 -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <!-- <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">🏆 Conference Appreciation · BIM 2025</p>
-          <p class="pub-title">GViT: A Customized Vision Transformer Model for Guava Leaf Disease Detection</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">GViT: A Customized Vision Transformer Model for Guava Leaf Disease Detection</p>
           <p class="pub-authors">Faruk Ahmed, <strong>Saifuddin Sagor</strong>, Md. Faysal Hossan, Abdullah Bin Faruk, Md. Zamirul Islam Reyad, Isha Das</p>
           <p class="pub-venue"><em>3rd International Conference on Big Data, IoT and Machine Learning (BIM 2025)</em>. Paper ID: 421. Dhaka International University, September 25–27, 2025. Published with Springer & Taylor & Francis.</p>
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-green">Certificate of Appreciation</span>
             <span class="badge b-gray">BIM 2025</span>
             <a href="#" target="_blank" style="display: inline-flex; align-items: center; gap: 5px; background-color: #dc2626; color: #ffffff; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; text-decoration: none; box-shadow: 0 1px 2px rgba(0,0,0,0.1); transition: opacity 0.2s ease;">
@@ -1456,40 +1756,40 @@ img{display:block;max-width:100%;}
               <span>View PDF</span>
             </a>
           </div>
-        </div>
-        <div style="flex: 0 0 180px; width: 180px; max-width: 100%; display: flex; flex-direction: column; align-items: center; gap: 5px;">
+        </div> -->
+        <!-- <div style="flex: 0 0 180px; width: 180px; max-width: 100%; display: flex; flex-direction: column; align-items: center; gap: 5px;">
           <div style="width: 100%; aspect-ratio: 4/3; border-radius: 6px; overflow: hidden; border: 1px solid #dadce0; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.1);" title="Click to view full certificate" onclick="document.getElementById('mImg').src='img/BIM_Conference.jpg'; document.getElementById('modal').classList.add('open');">
             <img src="img/BIM_Conference.jpg" alt="Certificate" style="width: 100%; height: 100%; object-fit: cover;">
           </div>
           <span style="font-size: 0.72rem; color: #5f6368; font-weight: 600; cursor: pointer;" onclick="document.getElementById('mImg').src='img/BIM_Conference.jpg'; document.getElementById('modal').classList.add('open');">📜 Certificate</span>
         </div>
-      </div>
+      </div> -->
 
     </div>
 
 
-      <!-- ── Book Chapter Heading Box ── -->
+    <!-- ── BOOK CHAPTER ── -->
     <div class="pub-panel" id="tab-bookchapter">
 
       <!-- ── Book Chapter Heading Box ── -->
-      <div style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin-bottom: 1.5rem; font-family: 'Roboto Slab', serif; font-size: 1.12rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <div style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin-bottom: 1.8rem; font-family: 'Roboto Slab', serif; font-size: 1.12rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
         <span style="display: flex; align-items: center; gap: 8px;">
           📚 Peer-Reviewed Book Chapters
         </span>
         <span style="font-size: 0.72rem; background: rgba(255,255,255,0.22); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.04em;">
-          Taylor & Francis
+          Taylor & Francis Group · Scopus
         </span>
       </div>
 
       <!-- BC1: GViT (Taylor & Francis Book Chapter) -->
-      <div class="pub-card" style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem; display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div style="flex: 1 1 480px; min-width: 260px;">
           <p class="pub-type">📚 Book Chapter · Taylor & Francis · 2025</p>
-          <p class="pub-title">[BC1] GViT: A Customized Vision Transformer Model for Guava Leaf Disease Detection</p>
+          <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">GViT: A Customized Vision Transformer Model for Guava Leaf Disease Detection</p>
           <p class="pub-authors">Ahmed, F., <strong>Sagor, S.</strong>, Hossan, M. F., Faruk, A. B., Reyad, M. Z. I., & Das, I.</p>
           <p class="pub-venue">In: <em>Big Data, IoT and Machine Learning (Proceedings of BIM 2025)</em>. CRC Press / Taylor & Francis Group, 2025.</p>
           
-          <div class="ec-badges">
+          <div class="ec-badges" style="margin-top: 0.7rem;">
             <span class="badge b-blue">Taylor & Francis</span>
             <span class="badge b-green">Book Chapter</span>
             <span class="badge b-gray">BIM 2025</span>
@@ -1517,21 +1817,24 @@ img{display:block;max-width:100%;}
 
     <!-- PREPRINT -->
     <div class="pub-panel" id="tab-preprint">
-    <div style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin-bottom: 1.5rem; font-family: 'Roboto Slab', serif; font-size: 1.12rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
-  <span style="display: flex; align-items: center; gap: 8px;">
-    📰 Preprint
-  </span>
-  <span style="font-size: 0.72rem; background: rgba(255,255,255,0.22); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.04em;">
-    ArXiv
-  </span>
-</div>
+      
+      <!-- ── Preprint Heading Box ── -->
+      <div style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin-bottom: 1.8rem; font-family: 'Roboto Slab', serif; font-size: 1.12rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <span style="display: flex; align-items: center; gap: 8px;">
+          📋 Preprint
+        </span>
+        <span style="font-size: 0.72rem; background: rgba(255,255,255,0.22); color: #ffffff; padding: 3px 10px; border-radius: 12px; font-weight: 600; letter-spacing: 0.04em;">
+          arXiv
+        </span>
+      </div>
 
-      <div class="pub-card">
+      <!-- P1: Card -->
+      <div class="pub-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem;">
         <p class="pub-type">📋 Preprint · arXiv · 2025</p>
-        <p class="pub-title">[P1] A study on Deep Convolutional Neural Networks, Transfer Learning, and Mnet Model for Cervical Cancer Detection</p>
+        <p class="pub-title" style="color: #066839; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.4rem;">A study on Deep Convolutional Neural Networks, Transfer Learning, and Mnet Model for Cervical Cancer Detection</p>
         <p class="pub-authors"><strong>Sagor, S.</strong>, Ahad, M. T., Ahmed, F., Ayon, R., & Parvin, S.</p>
         <p class="pub-venue"><em>arXiv preprint arXiv:2509.16250</em>. September 17, 2025.</p>
-        <div class="ec-badges">
+        <div class="ec-badges" style="margin-top: 0.7rem;">
           <span class="badge b-gray">arXiv</span>
           <span class="badge b-orange">Medical AI</span>
           <span class="badge b-yellow">Explainable AI</span>
@@ -1542,13 +1845,14 @@ img{display:block;max-width:100%;}
         </div>
         <a href="https://arxiv.org/abs/2509.16250" target="_blank" style="display:inline-block;margin-top:0.6rem;font-size:0.78rem;color:#1a73e8;">🔗 https://arxiv.org/abs/2509.16250</a>
       </div>
+
     </div>
 
     <!-- DATASETS -->
     <div class="pub-panel" id="tab-datasets">
       
       <!-- ── Top Banner Container ── -->
-      <div style="background-color: #066839; color: #ffffff; padding: 0.85rem 1.2rem; border-radius: 6px; margin-bottom: 1.6rem; display: flex; align-items: center; gap: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+      <div style="background-color: #066839; color: #ffffff; padding: 0.85rem 1.2rem; border-radius: 6px; margin-bottom: 1.8rem; display: flex; align-items: center; gap: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
           <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
           <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
@@ -1560,104 +1864,104 @@ img{display:block;max-width:100%;}
       </div>
 
       <!-- ── Category 1: Precision Agriculture & Plant Vision ── -->
-      <div style="margin-bottom: 2rem;">
-        <h4 style="font-size: 1.05rem; color: #066839; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px;">
+      <div style="margin-bottom: 2.2rem;">
+        <h4 style="font-size: 1.05rem; color: #066839; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;">
           🌱 Precision Agriculture & Plant Vision
           <span style="font-size: 0.72rem; background: #e6f0eb; color: #066839; padding: 2px 8px; border-radius: 12px; font-weight: 600;">12 Datasets</span>
         </h4>
         <div class="g3">
           
-          <div class="ds">
-            <p class="ds-t">Sunflower Plant Health and Growth Stage Image Dataset for Agricultural Machine Learning Applications</p>
-            <a href="https://data.mendeley.com/datasets/y3ygk98ngr/2" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">Sunflower Plant Health and Growth Stage Image Dataset for Agricultural Machine Learning Applications</p>
+            <a href="https://data.mendeley.com/datasets/y3ygk98ngr/2" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
           </div>
 
-          <div class="ds">
-            <p class="ds-t">LemonLENS: A Real-World Dataset for Multi-Class Lemon Leaf Disease Classification</p>
-            <a href="https://data.mendeley.com/datasets/ccwh64fr2r/2" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">LemonLENS: A Real-World Dataset for Multi-Class Lemon Leaf Disease Classification</p>
+            <a href="https://data.mendeley.com/datasets/ccwh64fr2r/2" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
           </div>
 
-          <div class="ds">
-            <p class="ds-t">Combined Medicinal Leaf Dataset: Azadirachta indica, Centella asiatica, Kalanchoe for Deep Learning</p>
-            <a href="https://data.mendeley.com/datasets/3kzjdcz97w/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">Combined Medicinal Leaf Dataset: Azadirachta indica, Centella asiatica, Kalanchoe for Deep Learning</p>
+            <a href="https://data.mendeley.com/datasets/3kzjdcz97w/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
           </div>
 
-          <div class="ds">
-            <p class="ds-t">A Balanced Multi-Class Image Collection for Deep Learning-Based Horticulture Disease Diagnosis</p>
-            <a href="https://data.mendeley.com/datasets/2hjh3gx8x3/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">A Balanced Multi-Class Image Collection for Deep Learning-Based Horticulture Disease Diagnosis</p>
+            <a href="https://data.mendeley.com/datasets/2hjh3gx8x3/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
           </div>
 
-          <div class="ds">
-            <p class="ds-t">Hibiscus Leaf Diseases Classification Dataset</p>
-            <a href="https://data.mendeley.com/datasets/k8pp8cbp8k/3" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">Hibiscus Leaf Diseases Classification Dataset</p>
+            <a href="https://data.mendeley.com/datasets/k8pp8cbp8k/3" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
           </div>
 
-          <div class="ds">
-            <p class="ds-t">A Real-World Hibiscus and Tea Leaf Image Dataset for Classification</p>
-            <a href="https://data.mendeley.com/datasets/5bzy89brkv/4" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">A Real-World Hibiscus and Tea Leaf Image Dataset for Classification</p>
+            <a href="https://data.mendeley.com/datasets/5bzy89brkv/4" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
           </div>
 
-          <div class="ds">
-            <p class="ds-t">Agri-Vision4: Multi-Crop Leaf Disease Dataset — Tomato, Papaya, Zucchini, Bottle Gourd from Bangladesh</p>
-            <a href="https://data.mendeley.com/datasets/8t6k37ztxc/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">Agri-Vision4: Multi-Crop Leaf Disease Dataset — Tomato, Papaya, Zucchini, Bottle Gourd from Bangladesh</p>
+            <a href="https://data.mendeley.com/datasets/8t6k37ztxc/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
           </div>
 
-          <div class="ds">
-            <p class="ds-t">A Balanced Papaya Leaf Disease Dataset via CycleGAN-based Generative Augmentation</p>
-            <a href="https://data.mendeley.com/datasets/h56m9vgv95/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">A Balanced Papaya Leaf Disease Dataset via CycleGAN-based Generative Augmentation</p>
+            <a href="https://data.mendeley.com/datasets/h56m9vgv95/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
           </div>
 
-          <div class="ds">
-            <p class="ds-t">A Dataset for Classification of Bottle Gourd Leaf Diseases</p>
-            <a href="https://data.mendeley.com/datasets/m9nmyp7r6h/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">A Dataset for Classification of Bottle Gourd Leaf Diseases</p>
+            <a href="https://data.mendeley.com/datasets/m9nmyp7r6h/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
           </div>
 
-          <div class="ds">
-            <p class="ds-t">Real-Life Dataset of Tea Plant Leaf Disease Classification</p>
-            <a href="https://data.mendeley.com/datasets/rrff4vb35m/2" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">Real-Life Dataset of Tea Plant Leaf Disease Classification</p>
+            <a href="https://data.mendeley.com/datasets/rrff4vb35m/2" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
           </div>
 
-          <div class="ds">
-            <p class="ds-t">Multi-Fruit Leaf Image Dataset: Guava, Jackfruit, Mango, and Olive</p>
-            <a href="https://data.mendeley.com/datasets/82vn9k44ky/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">Multi-Fruit Leaf Image Dataset: Guava, Jackfruit, Mango, and Olive</p>
+            <a href="https://data.mendeley.com/datasets/82vn9k44ky/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
           </div>
 
-          <div class="ds">
-            <p class="ds-t">A Multi-Class Medicinal Plant Leaf Dataset for Plant Health Detection and Classification</p>
-            <a href="https://data.mendeley.com/datasets/23tnz64w5m/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">A Multi-Class Medicinal Plant Leaf Dataset for Plant Health Detection and Classification</p>
+            <a href="https://data.mendeley.com/datasets/23tnz64w5m/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
@@ -1666,17 +1970,17 @@ img{display:block;max-width:100%;}
         </div>
       </div>
 
-      <!-- ── Category 2: Healthcare & Medical AI ── -->
-      <div style="margin-bottom: 2rem;">
-        <h4 style="font-size: 1.05rem; color: #e11d48; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px;">
+     <!-- ── Category 2: Healthcare & Medical AI (সব গ্রিন করা হয়েছে) ── -->
+      <div style="margin-bottom: 2.2rem;">
+        <h4 style="font-size: 1.05rem; color: #066839; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;">
           🩺 Healthcare & Medical AI
-          <span style="font-size: 0.72rem; background: #ffe4e6; color: #e11d48; padding: 2px 8px; border-radius: 12px; font-weight: 600;">Clinical Dataset</span>
+          <span style="font-size: 0.72rem; background: #e6f0eb; color: #066839; padding: 2px 8px; border-radius: 12px; font-weight: 600;">Clinical Dataset</span>
         </h4>
         <div class="g3">
           
-          <div class="ds">
-            <p class="ds-t">CSAD – A Clinical Sperm Analysis Dataset for Male Fertility Studies</p>
-            <a href="https://data.mendeley.com/datasets/ps6kn6hc7z/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">CSAD – A Clinical Sperm Analysis Dataset for Male Fertility Studies</p>
+            <a href="https://data.mendeley.com/datasets/ps6kn6hc7z/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
@@ -1685,17 +1989,17 @@ img{display:block;max-width:100%;}
         </div>
       </div>
 
-      <!-- ── Category 3: NLP & Behavioral Data Science ── -->
+      <!-- ── Category 3: NLP & Behavioral Data Science (সব গ্রিন করা হয়েছে) ── -->
       <div style="margin-bottom: 1.5rem;">
-        <h4 style="font-size: 1.05rem; color: #d97706; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px;">
+        <h4 style="font-size: 1.05rem; color: #066839; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;">
           🧠 NLP & Behavioral Data Science
-          <span style="font-size: 0.72rem; background: #fef3c7; color: #d97706; padding: 2px 8px; border-radius: 12px; font-weight: 600;">Survey Dataset</span>
+          <span style="font-size: 0.72rem; background: #e6f0eb; color: #066839; padding: 2px 8px; border-radius: 12px; font-weight: 600;">Survey Dataset</span>
         </h4>
         <div class="g3">
           
-          <div class="ds">
-            <p class="ds-t">Exploring the Dynamics of Drug Use: Socio-emotional and Environmental Influences Survey</p>
-            <a href="https://data.mendeley.com/datasets/m3hfcrwr3y/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:4px 10px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,0.1);margin-top:0.6rem;width:fit-content;">
+          <div class="ds" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <p class="ds-t" style="color: #066839; font-size: 0.88rem; font-weight: 700; line-height: 1.45; margin-bottom: 0.8rem;">Exploring the Dynamics of Drug Use: Socio-emotional and Environmental Influences Survey</p>
+            <a href="https://data.mendeley.com/datasets/m3hfcrwr3y/1" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background-color:#066839;color:#ffffff;padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.15);width:fit-content;margin-top:auto;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
               <span>View Dataset</span>
             </a>
@@ -1703,7 +2007,6 @@ img{display:block;max-width:100%;}
 
         </div>
       </div>
-
     </div>
 
   </div>
@@ -1716,38 +2019,42 @@ img{display:block;max-width:100%;}
   <div class="section-banner"><h1>Skills</h1></div>
   <div class="content-wrap">
     
-    <!-- ── ১ম ছবি: গ্রিন ব্যানার হেডিং ── -->
-    <h3 style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin: 1.5rem 0 1.2rem; font-family: 'Roboto Slab', serif; font-size: 1.15rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 8px;">
+    <!-- ── গ্রিন ব্যানার হেডিং ── -->
+    <h3 style="background-color: #066839; color: #ffffff; padding: 0.75rem 1.2rem; border-radius: 6px; margin: 1.5rem 0 1.8rem; font-family: 'Roboto Slab', serif; font-size: 1.15rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 8px;">
       ⚡ Technical Skills
     </h3>
 
     <div class="g2">
-      <!-- ── ২য় ছবি: সাব-হেডিংগুলো কালার করা হয়েছে ── -->
-      <div class="sg">
-        <p class="sg-t" style="color: #066839; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em;">💻 PROGRAMMING LANGUAGES</p>
+      
+      <!-- 1. Programming Languages -->
+      <div class="sg" style="background: #ffffff; border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 1.4rem;">
+        <p class="sg-t" style="color: #066839; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.08em; margin-bottom: 0.8rem;">💻 PROGRAMMING LANGUAGES</p>
         <span class="sp">Python</span><span class="sp">C</span><span class="sp">C++</span><span class="sp">Java</span><span class="sp">SQL</span><span class="sp">LaTeX</span><span class="sp">HTML</span><span class="sp">CSS</span><span class="sp">JavaScript</span>
       </div>
 
-      <div class="sg">
-        <p class="sg-t" style="color: #066839; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em;">🤖 AI / ML FRAMEWORKS</p>
+      <!-- 2. AI / ML Frameworks -->
+      <div class="sg" style="background: #ffffff; border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 1.4rem;">
+        <p class="sg-t" style="color: #066839; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.08em; margin-bottom: 0.8rem;">🤖 AI / ML FRAMEWORKS</p>
         <span class="sp">PyTorch</span><span class="sp">TensorFlow</span><span class="sp">OpenCV</span><span class="sp">Scikit-learn</span><span class="sp">LIME</span><span class="sp">SHAP</span><span class="sp">HuggingFace</span><span class="sp">LoRA</span>
       </div>
 
-      <div class="sg">
-        <p class="sg-t" style="color: #066839; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em;">🛠️ TOOLS & PLATFORMS</p>
+      <!-- 3. Tools & Platforms -->
+      <div class="sg" style="background: #ffffff; border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 1.4rem;">
+        <p class="sg-t" style="color: #066839; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.08em; margin-bottom: 0.8rem;">🛠️ TOOLS & PLATFORMS</p>
         <span class="sp">Git / GitHub</span><span class="sp">Lightning AI</span><span class="sp">Google Colab</span><span class="sp">Kaggle</span><span class="sp">Linux / Bash</span><span class="sp">AWS</span><span class="sp">Mendeley</span><span class="sp">Jupyter</span>
       </div>
 
-      <div class="sg">
-        <p class="sg-t" style="color: #066839; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em;">📊 OFFICE & PRODUCTIVITY</p>
+      <!-- 4. Office & Productivity -->
+      <div class="sg" style="background: #ffffff; border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 1.4rem;">
+        <p class="sg-t" style="color: #066839; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.08em; margin-bottom: 0.8rem;">📊 OFFICE & PRODUCTIVITY</p>
         <span class="sp">MS Word</span><span class="sp">MS Excel</span><span class="sp">MS PowerPoint</span><span class="sp">MS Access</span><span class="sp">Graphics Design</span><span class="sp">AWS Cloud Foundations</span>
       </div>
+
     </div>
 
   </div>
   <!-- <div class="site-footer">© 2026 Saifuddin Sagor. All rights reserved.</div> -->
 </div>
-
 
 
 
@@ -1762,17 +2069,18 @@ img{display:block;max-width:100%;}
       🔬 Research Experience
     </h3>
 
-    <div class="edu-card">
+    <!-- Card 1: Research Assistant -->
+    <div class="edu-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem;">
       <p class="ec-year">April 2025 – Present</p>
-      <p class="ec-title">Research Assistant</p>
-      <p class="ec-inst">Department of CSE, Daffodil International University (DIU), Dhaka</p>
+      <p class="ec-title" style="color: #066839; font-size: 1.08rem; font-weight: 700; margin-bottom: 0.35rem;">Research Assistant</p>
+      <p class="ec-inst" style="color: #1a73e8; font-weight: 600; margin-bottom: 0.6rem;">Department of CSE, Daffodil International University (DIU), Dhaka</p>
       <p class="ec-body">
         <strong>Supervisor:</strong> Md. Masum Billah, Assistant Professor, Dept. of CSE, DIU<br>
         • Architected and trained CNN-ViT and Explainable AI (XAI) models in PyTorch, yielding publications in Springer Nature and Elsevier.<br>
         • Spearheaded multi-crop field dataset acquisition, generative augmentation (CycleGAN), and benchmark curation for precision agriculture.<br>
         • Evaluated post-hoc interpretability frameworks (Grad-CAM, LIME, SHAP) for high-stakes decision-making pipelines.
       </p>
-      <div class="ec-badges">
+      <div class="ec-badges" style="margin-top: 0.8rem;">
         <span class="badge b-blue">Deep Learning</span>
         <span class="badge b-green">PyTorch</span>
         <span class="badge b-yellow">Explainable AI</span>
@@ -1780,16 +2088,17 @@ img{display:block;max-width:100%;}
       </div>
     </div>
 
-    <div class="edu-card">
+    <!-- Card 2: 4IR Researcher -->
+    <div class="edu-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem;">
       <p class="ec-year">January 2024 – January 2025</p>
-      <p class="ec-title">Undergraduate Researcher & Mentor</p>
-      <p class="ec-inst">4IR Research Cell, Daffodil International University</p>
+      <p class="ec-title" style="color: #066839; font-size: 1.08rem; font-weight: 700; margin-bottom: 0.35rem;">Undergraduate Researcher & Mentor</p>
+      <p class="ec-inst" style="color: #1a73e8; font-weight: 600; margin-bottom: 0.6rem;">4IR Research Cell, Daffodil International University</p>
       <p class="ec-body">
         <strong>Supervisors:</strong> Faruk Ahmed (Lecturer, SWE) · Dr. Md Taimur Ahad (Associate Professor, CSE)<br>
         • Engineered medical computer vision pipelines for cervical cytology and brain CT image analysis.<br>
         • Mentored 10+ junior undergraduate researchers in deep learning pipelines, academic paper drafting, and conference submission workflows.
       </p>
-      <div class="ec-badges">
+      <div class="ec-badges" style="margin-top: 0.8rem;">
         <span class="badge b-orange">Medical AI</span>
         <span class="badge b-blue">Computer Vision</span>
         <span class="badge b-gray">Mentorship</span>
@@ -1802,16 +2111,17 @@ img{display:block;max-width:100%;}
       💼 Job & Internship Experience
     </h3>
 
-    <div class="edu-card">
+    <!-- Card 3: Intern -->
+    <div class="edu-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem;">
       <p class="ec-year">2025 – Present</p>
-      <p class="ec-title">Machine Learning / AI Engineering Intern</p>
-      <p class="ec-inst">AI Research & Development Lab — Dhaka, Bangladesh</p>
+      <p class="ec-title" style="color: #066839; font-size: 1.08rem; font-weight: 700; margin-bottom: 0.35rem;">Machine Learning / AI Engineering Intern</p>
+      <p class="ec-inst" style="color: #1a73e8; font-weight: 600; margin-bottom: 0.6rem;">AI Research & Development Lab — Dhaka, Bangladesh</p>
       <p class="ec-body">
         • Developed, fine-tuned, and benchmarked computer vision models for deployment on edge and cloud platforms.<br>
         • Assisted in dataset pipeline automation, model evaluation metrics, and API integration for intelligent web systems.<br>
         • Conducted rigorous statistical analysis and model latency testing for real-time inference optimization.
       </p>
-      <div class="ec-badges">
+      <div class="ec-badges" style="margin-top: 0.8rem;">
         <span class="badge b-blue">Python</span>
         <span class="badge b-green">Model Deployment</span>
         <span class="badge b-gray">Machine Learning</span>
@@ -1824,31 +2134,33 @@ img{display:block;max-width:100%;}
       🛡️ Club & Leadership Experience
     </h3>
 
-    <div class="edu-card">
+    <!-- Card 4: Joint Lead -->
+    <div class="edu-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem;">
       <p class="ec-year">2025 – 2026</p>
-      <p class="ec-title">Joint Lead Executive</p>
-      <p class="ec-inst">Cyber Security Club, Daffodil International University</p>
+      <p class="ec-title" style="color: #066839; font-size: 1.08rem; font-weight: 700; margin-bottom: 0.35rem;">Joint Lead Executive</p>
+      <p class="ec-inst" style="color: #1a73e8; font-weight: 600; margin-bottom: 0.6rem;">DIU Cyber Security Club, Daffodil International University</p>
       <p class="ec-body">
         • Spearheaded technical cybersecurity events, hands-on bootcamps, and competitive CTF sessions for university students.<br>
         • Served as a Core Organizing Committee Member for the National CTF contest <em>DIU_CYBERCON 2025</em>.<br>
         • Directed student teams, coordinated event logistics, and guided beginners in ethical hacking and digital safety.
       </p>
-      <div class="ec-badges">
+      <div class="ec-badges" style="margin-top: 0.8rem;">
         <span class="badge b-blue">Leadership</span>
         <span class="badge b-green">Cyber Security</span>
         <span class="badge b-gray">Event Organizing</span>
       </div>
     </div>
 
-    <div class="edu-card">
+    <!-- Card 5: Asst Press Sec -->
+    <div class="edu-card" style="border: 1px solid #dadce0; border-top: 3.5px solid #066839; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); background: #ffffff; padding: 1.5rem 1.75rem; margin-bottom: 1.4rem;">
       <p class="ec-year">2024 – 2025</p>
-      <p class="ec-title">Assistant Press Secretary</p>
-      <p class="ec-inst">Cyber Security Club, Daffodil International University</p>
+      <p class="ec-title" style="color: #066839; font-size: 1.08rem; font-weight: 700; margin-bottom: 0.35rem;">Assistant Press Secretary</p>
+      <p class="ec-inst" style="color: #1a73e8; font-weight: 600; margin-bottom: 0.6rem;">DIU Cyber Security Club, Daffodil International University</p>
       <p class="ec-body">
         • Formulated official press releases, event announcements, and institutional communication for club programs.<br>
         • Coordinated digital media coverage and publication outreach across academic channels and social platforms.
       </p>
-      <div class="ec-badges">
+      <div class="ec-badges" style="margin-top: 0.8rem;">
         <span class="badge b-orange">Public Relations</span>
         <span class="badge b-gray">Media Management</span>
       </div>
@@ -2125,6 +2437,14 @@ function showPage(id, el) {
     const first = document.querySelector('.nav-links a');
     if (first) first.classList.add('active');
   }
+
+  // ── Smooth Page Navigation (From Home Page Cards) ──
+function navigateTo(pageId) {
+  const targetNavLink = document.querySelector(`.nav-links a[onclick*="${pageId}"]`);
+  showPage(pageId, targetNavLink);
+  window.scrollTo(0, 0);
+}
+
   // Close mobile nav
   document.getElementById('navLinks').classList.remove('open');
   document.getElementById('navHamburger').classList.remove('open');
@@ -2132,35 +2452,32 @@ function showPage(id, el) {
 }
 
 // Photo upload — main profile
-document.getElementById('photoInput').addEventListener('change', function(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    const img = document.getElementById('profileImg');
-    img.src = ev.target.result; img.style.display = 'block';
-    document.getElementById('profilePh').style.display = 'none';
-    // also update nav logo
-    document.getElementById('navImg').src = ev.target.result;
-    document.getElementById('navImg').style.display = 'block';
-    document.getElementById('navPh').style.display = 'none';
-  };
-  reader.readAsDataURL(file);
-});
+// Photo upload (Safe Check)
+const pInput = document.getElementById('photoInput');
+if (pInput) {
+  pInput.addEventListener('change', function(e) {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = document.getElementById('profileImg');
+      if (img) img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
-// Photo upload — nav logo
-document.getElementById('navPhotoInput').addEventListener('change', function(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    document.getElementById('navImg').src = ev.target.result;
-    document.getElementById('navImg').style.display = 'block';
-    document.getElementById('navPh').style.display = 'none';
-    document.getElementById('profileImg').src = ev.target.result;
-    document.getElementById('profileImg').style.display = 'block';
-    document.getElementById('profilePh').style.display = 'none';
-  };
-  reader.readAsDataURL(file);
-});
+const npInput = document.getElementById('navPhotoInput');
+if (npInput) {
+  npInput.addEventListener('change', function(e) {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const navImg = document.getElementById('navImg');
+      if (navImg) navImg.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
 // Publication tabs
 function switchTab(id, el) {
@@ -2321,6 +2638,19 @@ function makeCertUploader(inputId, gridId) {}  // kept for legacy compatibility
 
 function closeM() { document.getElementById('modal').classList.remove('open'); }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeM(); });
+
+// ── Hero Banner 3-Second Slideshow Loop ──
+let currentHeroSlide = 0;
+const heroSlides = document.querySelectorAll('.hero-slide');
+
+if (heroSlides.length > 0) {
+  setInterval(() => {
+    heroSlides[currentHeroSlide].classList.remove('active');
+    currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+    heroSlides[currentHeroSlide].classList.add('active');
+  }, 3000); // ৩ সেকেন্ড পরপর স্লাইড হবে
+}
+
 </script>
 </body>
 </html>
